@@ -82,7 +82,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 if(WIN32)
 	if(NOT DEFINED OBS_FRONTEND_LIB)
 		set(OBS_FRONTEND_LIB "OBS_FRONTEND_LIB-NOTFOUND" CACHE FILEPATH "OBS frontend library")
-		message(FATAL_ERROR "Could not find OBS Frontend API\'s library !")
+		message(FATAL_ERROR "Could not find OBS Frontend API's library !")
 	endif()
 
     # Enable Multicore Builds and disable FH4 (to not depend on VCRUNTIME140_1.DLL when building with VS2019)
