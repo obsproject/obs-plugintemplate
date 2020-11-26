@@ -21,7 +21,7 @@ echo "=> Updating Homebrew.."
 brew update >/dev/null
 
 echo "[=> Checking installed Homebrew formulas.."
-BREW_PACKAGES=$(brew list)
+BREW_PACKAGES=$(brew list --formula)
 BREW_DEPENDENCIES="jack speexdsp ccache swig mbedtls"
 
 for DEPENDENCY in ${BREW_DEPENDENCIES}; do
