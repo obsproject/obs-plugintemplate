@@ -3,6 +3,8 @@
 
 
 OSTYPE=$(uname)
+MACOS_DEPS_VERSION=2020-08-30
+QT_VERSION=5.14.1
 
 if [ "${OSTYPE}" != "Darwin" ]; then
     echo "[Error] macOS install dependencies script can be run on Darwin-type OS only."
@@ -35,18 +37,11 @@ for DEPENDENCY in ${BREW_DEPENDENCIES}; do
 done
 
 # qtwebsockets deps
-echo "=> Installing plugin dependency 'QT 5.10.1'.."
-# =!= NOTICE =!=
-# When building QT5 from sources on macOS 10.13+, use local qt5 formula:
-# brew install ./CI/macos/qt.rb
-# Pouring from the bottle is much quicker though, so use bottle for now.
-# =!= NOTICE =!=
+echo "=> Installing plugin dependency 'QT ${QT_VERSION}'.."
 
-brew install https://gist.githubusercontent.com/DDRBoxman/b3956fab6073335a4bf151db0dcbd4ad/raw/ed1342a8a86793ea8c10d8b4d712a654da121ace/qt.rb
-
-# Pin this version of QT5 to avoid `brew upgrade`
-# upgrading it to incompatible version
-brew pin qt
+curl -L -O https://github.com/obsproject/obs-deps/releases/download/${MACOS_DEPS_VERSION}/macos-qt-${QT_VERSION}-${MACOS_DEPS_VERSION}.tar.gz
+tar -xf ./macos-qt-${QT_VERSION}-${MACOS_DEPS_VERSION}.tar.gz -C "/tmp"
+xattr -r -d com.apple.quarantine /tmp/obsdeps
 
 # Fetch and install Packages app
 # =!= NOTICE =!=

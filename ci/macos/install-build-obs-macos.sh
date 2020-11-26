@@ -38,6 +38,7 @@ cmake .. \
 	-DCMAKE_OSX_DEPLOYMENT_TARGET=10.11 \
 	-DDISABLE_PLUGINS=true \
     -DENABLE_SCRIPTING=0 \
+	-DQTDIR=/tmp/obsdeps \
 	-DDepsPath=/tmp/obsdeps \
 	-DCMAKE_PREFIX_PATH=/usr/local/opt/qt/lib/cmake \
 && make -j4
