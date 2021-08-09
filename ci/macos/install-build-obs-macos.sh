@@ -21,8 +21,8 @@ if [ "${HAS_GIT}" = "" ]; then
 fi
 
 echo "=> Downloading and unpacking OBS dependencies"
-wget --quiet --retry-connrefused --waitretry=1 https://obs-nightly.s3.amazonaws.com/osx-deps-2018-08-09.tar.gz
-tar -xf ./osx-deps-2018-08-09.tar.gz -C /tmp
+curl -L -O https://github.com/obsproject/obs-deps/releases/download/2021-03-25/macos-deps-x86_64-2021-03-25.tar.gz
+tar -xf ./macos-deps-x86_64-2021-03-25.tar.gz -C "/tmp"
 
 # Build obs-studio
 cd ..
