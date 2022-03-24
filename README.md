@@ -23,7 +23,19 @@ set(PLUGIN_AUTHOR "Your Name Here")
 set(LINUX_MAINTAINER_EMAIL "me@contoso.com")
 ```
 
+Check the `Library linking settings` section if you want to use the [OBS Studio Frontend API](https://obsproject.com/docs/reference-frontend-api.html) or add GUI with Qt in your plugin.
+
 The build scripts (contained in the `.github/scripts` directory) will update the `project` line automatically based on values from the `buildspec.json` file. If the scripts are not used, these changes need to be done manually.
+
+## In-tree build
+
+This plugin can be built inside OBS Studio build tree for easier debugging and testing.
+
+- [Build OBS Studio](https://obsproject.com/wiki/Install-Instructions#building-obs-studio)
+- Clone your fork of this plugin repo inside the `plugins` folder `obs-studio`.
+- Add `add_subdirectory(obs-plugintemplate)` to `plugins/CMakeLists.txt`.
+  - Replace `obs-plugintemplate` by the folder name of your plugin repo.
+- Your plugin will now be built alongside OBS Studio.
 
 ## GitHub Actions & CI
 
