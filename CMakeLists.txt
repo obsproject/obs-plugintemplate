@@ -23,32 +23,40 @@ set(LINUX_MAINTAINER_EMAIL "me@mymailhost.com")
 # required for visibility e.g. in Xcode or Visual Studio
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-main.c)
 
-# /!\ TAKE NOTE: No need to edit things past this point /!\
+# --- Library settings ---
 
 find_package(libobs REQUIRED)
-find_package(obs-frontend-api REQUIRED)
 include(cmake/ObsPluginHelpers.cmake)
-find_qt(COMPONENTS Widgets Core)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
+
+# Uncomment those lines if you want to use the OBS Frontend API in your plugin
+
+# find_package(obs-frontend-api REQUIRED)
+
+# target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::obs-frontend-api)
+
+# Uncomment those lines if you want to use Qt in your plugin
+
+# find_qt(COMPONENTS Widgets Core)
+
+# target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt::Core Qt::Widgets)
+
+# set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES AUTOMOC ON AUTOUIC ON
+# AUTORCC ON)
+
+# --- End of section ---
+
+# /!\ TAKE NOTE: No need to edit things past this point /!\
+
+# --- Platform-independent build settings and tasks ---
 
 configure_file(src/plugin-macros.h.in
                ${CMAKE_SOURCE_DIR}/src/plugin-macros.generated.h)
 
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-macros.generated.h)
 
-# --- Platform-independent build settings ---
-
 target_include_directories(${CMAKE_PROJECT_NAME}
                            PRIVATE ${CMAKE_SOURCE_DIR}/src)
-
-target_link_libraries(
-  ${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs OBS::obs-frontend-api Qt::Core
-                                Qt::Widgets)
-
-set_target_properties(
-  ${CMAKE_PROJECT_NAME}
-  PROPERTIES AUTOMOC ON
-             AUTOUIC ON
-             AUTORCC ON)
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 
