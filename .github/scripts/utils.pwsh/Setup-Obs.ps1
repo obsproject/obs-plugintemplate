@@ -33,7 +33,7 @@ function Setup-Obs {
     }
 
     Push-Location -Stack BuildTemp
-    Ensure-Location -Path "$(Resolve-Path -Path "${ProjectRoot}/../")/obs-studio"
+    Ensure-Location -Path "$(Resolve-Path -Path "${ProjectRoot}/../")/obs-studio-plugin"
 
     if ( ! ( ( $script:SkipAll ) -or ( $script:SkipUnpack ) ) ) {
         Invoke-GitCheckout -Uri $ObsRepository -Commit $ObsHash -Path . -Branch $ObsBranch

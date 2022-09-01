@@ -43,7 +43,7 @@ if [[ -z ${obs_version} ]] {
 }
 
 pushd
-mkcd ${project_root:h}/obs-studio
+mkcd ${project_root:h}/obs-studio-plugin
 
 if (( ! (${skips[(Ie)all]} + ${skips[(Ie)unpack]}) )) {
   if [[ -d .git ]] {
