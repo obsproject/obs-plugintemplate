@@ -180,14 +180,22 @@ Usage: %B${functrace[1]%:*}%b <option> [<options>]
 
   case ${host_os} {
     macos)
+      local MACOS_PACKAGE_UUID
+      local MACOS_INSTALLER_UUID
+      read -r MACOS_PACKAGE_UUID MACOS_INSTALLER_UUID <<< \
+        "$(jq -r '. | {"macosPackageUuid", "macosInstallerUuid"} | join(" ")' ${buildspec_file})"
       sed -i '' \
-        "s/project(\(.*\) VERSION \(.*\))/project(${product_name} VERSION ${product_version})/" \
+        -e "s/project(\(.*\) VERSION \(.*\))/project(${product_name} VERSION ${product_version})/" \
         "${project_root}/CMakeLists.txt"
       sed -i '' \
         "s/set(PLUGIN_AUTHOR \(.*\))/set(PLUGIN_AUTHOR ${product_author})/"\
         "${project_root}/CMakeLists.txt"
       sed -i '' \
         "s/set(LINUX_MAINTAINER_EMAIL \(.*\))/set(LINUX_MAINTAINER_EMAIL ${product_email})/"\
+        "${project_root}/CMakeLists.txt"
+      sed -i '' \
+        -e "s/set(MACOS_PACKAGE_UUID \(.*\))/set(MACOS_PACKAGE_UUID \"${MACOS_PACKAGE_UUID}\")/" \
+        -e "s/set(MACOS_INSTALLER_UUID \(.*\))/set(MACOS_INSTALLER_UUID \"${MACOS_INSTALLER_UUID}\")/" \
         "${project_root}/CMakeLists.txt"
       ;;
     linux)

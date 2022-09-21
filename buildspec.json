@@ -84,5 +84,8 @@
     "name": "obs-plugintemplate",
     "version": "1.0.0",
     "author": "Your Name Here",
-    "email": "me@mymailhost.com"
+    "email": "me@mymailhost.com",
+    "macosPackageUuid": "0B7A74BC-65CF-4FF1-AC34-5C743E8A48F5",
+    "macosInstallerUuid": "52B6084A-F58D-45C3-BE37-76AD45F16072",
+    "windowsAppId": "CD703FE5-1F2C-4837-BD3D-DD840D83C3E3"
 }

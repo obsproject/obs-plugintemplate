@@ -45,6 +45,7 @@ function Build {
     $BuildSpec = Get-Content -Path ${BuildSpecFile} -Raw | ConvertFrom-Json
     $ProductName = $BuildSpec.name
     $ProductVersion = $BuildSpec.version
+    $AppId = $BuildSpec."windowsAppId"
 
     $script:DepsVersion = ''
     $script:QtVersion = '5'
@@ -59,6 +60,7 @@ function Build {
 
     (Get-Content -Path ${ProjectRoot}/CMakeLists.txt -Raw) `
         -replace "project\((.*) VERSION (.*)\)", "project(${ProductName} VERSION ${ProductVersion})" `
+        -replace "set\(WINDOWS_APP_ID (.*)\)", "set(WINDOWS_APP_ID ${AppId})" `
         | Out-File -Path ${ProjectRoot}/CMakeLists.txt -NoNewline
 
     Setup-Obs

@@ -13,6 +13,11 @@ set(PLUGIN_AUTHOR "Your Name Here")
 # the installer and when submitting the installer for notarization)
 set(MACOS_BUNDLEID "com.example.${CMAKE_PROJECT_NAME}")
 
+# Set new UUIDs when you start to create a new plugin.
+set(MACOS_PACKAGE_UUID "0B7A74BC-65CF-4FF1-AC34-5C743E8A48F5")
+set(MACOS_INSTALLER_UUID "52B6084A-F58D-45C3-BE37-76AD45F16072")
+set(WINDOWS_APP_ID "CD703FE5-1F2C-4837-BD3D-DD840D83C3E3")
+
 # Replace `me@contoso.com` with the maintainer email address you want to put in Linux packages
 set(LINUX_MAINTAINER_EMAIL "me@mymailhost.com")
 
