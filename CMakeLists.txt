@@ -21,7 +21,7 @@ set(LINUX_MAINTAINER_EMAIL "me@mymailhost.com")
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-main.c)
 
 # Import libobs as main plugin dependency
-find_package(libobs REQUIRED)
+find_package(libobs)
 if (${libobs_FOUND})
    message(STATUS "Found libobs")
 else (${libobs_FOUND})
