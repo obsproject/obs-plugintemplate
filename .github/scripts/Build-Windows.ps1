@@ -45,6 +45,11 @@ function Build {
     $BuildSpec = Get-Content -Path ${BuildSpecFile} -Raw | ConvertFrom-Json
     $ProductName = $BuildSpec.name
     $ProductVersion = $BuildSpec.version
+    $ProductAuthor = $BuildSpec.author
+    $ProductEmail = $BuildSpec.email
+
+    $ProductAuthor = '"{0}"' -f $ProductAuthor
+    $ProductEmail = '"{0}"' -f $ProductEmail
 
     $script:DepsVersion = ''
     $script:QtVersion = '5'
@@ -59,6 +64,8 @@ function Build {
 
     (Get-Content -Path ${ProjectRoot}/CMakeLists.txt -Raw) `
         -replace "project\((.*) VERSION (.*)\)", "project(${ProductName} VERSION ${ProductVersion})" `
+        -replace "set\(PLUGIN_AUTHOR(.*)\)", "set(PLUGIN_AUTHOR ${ProductAuthor})" `
+        -replace "set\(LINUX_MAINTAINER_EMAIL(.*)\)", "set(LINUX_MAINTAINER_EMAIL ${ProductEmail})" `
         | Out-File -Path ${ProjectRoot}/CMakeLists.txt -NoNewline
 
     Setup-Obs
