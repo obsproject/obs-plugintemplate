@@ -41,13 +41,13 @@ set_target_properties(
              AUTORCC ON)
 #]]
 
-configure_file(src/plugin-macros.h.in ${CMAKE_SOURCE_DIR}/src/plugin-macros.generated.h)
-
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-macros.generated.h)
-
 # /!\ TAKE NOTE: No need to edit things past this point /!\
 
 # --- Platform-independent build settings ---
+
+# These defines are exported out to the compiler
+add_compile_definitions(PLUGIN_NAME="${CMAKE_PROJECT_NAME}"
+                        PLUGIN_VERSION="${CMAKE_PROJECT_VERSION}")
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 

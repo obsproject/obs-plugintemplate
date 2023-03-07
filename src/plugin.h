@@ -19,9 +19,8 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #ifndef PLUGINNAME_H
 #define PLUGINNAME_H
 
-#define PLUGIN_NAME "@CMAKE_PROJECT_NAME@"
-#define PLUGIN_VERSION "@CMAKE_PROJECT_VERSION@"
-
-#define blog(level, msg, ...) blog(level, "[" PLUGIN_NAME "] " msg, ##__VA_ARGS__)
+#include <obs-module.h>
+#define blog(level, msg, ...) \
+	blog(level, "[" PLUGIN_NAME "] " msg, ##__VA_ARGS__)
 
 #endif // PLUGINNAME_H
