@@ -30,13 +30,16 @@ jobs:
         run: sudo apt-get install -y clang-format-13
 
       - name: Run clang-format
-        run: ./.github/scripts/check-format.sh && ./.github/scripts/check-changes.sh
+        run: ./.github/scripts/check-format.sh
 
       - name: Install cmake-format
         run: sudo pip install cmakelang
 
       - name: Run cmake-format
         run: ./.github/scripts/check-cmake.sh
+
+      - name: Check for formatting issues
+        run: ./.github/scripts/check-changes.sh
 
   macos_build:
     name: 02 - macOS

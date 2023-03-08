@@ -9,12 +9,6 @@ else
     VERBOSITY=""
 fi
 
-if [ "${CI}" ]; then
-    MODE="--check"
-else
-    MODE="-i"
-fi
-
 # Runs the formatter in parallel on the code base.
 # Return codes:
 #  - 1 there are files to be formatted
@@ -50,4 +44,4 @@ find . -type d \( \
 \) -prune -false -type f -o \
     -name 'CMakeLists.txt' -or \
     -name '*.cmake' \
- | xargs -L10 -P ${NPROC} cmake-format ${MODE} ${VERBOSITY}
+ | xargs -L10 -P ${NPROC} cmake-format -i ${VERBOSITY}
