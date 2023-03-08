@@ -45,7 +45,7 @@ if [[ -z ${obs_version} ]] {
 pushd
 mkcd ${project_root:h}/obs-studio
 
-if (( ! (${skips[(Ie)all]} + ${skips[(Ie)unpack]}) )) {
+if (( ! (${skips[(Ie)all]} + ${skips[(Ie)unpack]} + ${skips[(Ie)deps]}) )) {
   if [[ -d .git ]] {
     git config advice.detachedHead false
     git config remote.pluginbuild.url "${obs_repo:-https://github.com/obsproject/obs-studio.git}"
@@ -67,7 +67,7 @@ if (( ! (${skips[(Ie)all]} + ${skips[(Ie)unpack]}) )) {
   git submodule update --init --recursive
 }
 
-if (( ! (${skips[(Ie)all]} + ${skips[(Ie)build]}) )) {
+if (( ! (${skips[(Ie)all]} + ${skips[(Ie)deps]}) )) {
   log_info 'Configuring obs-studio...'
 
   local -a cmake_args=(
