@@ -10,11 +10,13 @@ else
   log_status "macOS ${macos_version} is recent"
 fi
 
-log_info 'Checking for Homebrew...'
-if (( ! ${+commands[brew]} )) {
-  log_error 'No Homebrew command found. Please install Homebrew (https://brew.sh)'
-  return 2
-}
+if (( ! (${skips[(Ie)all]} + ${skips[(Ie)deps]}) )) {
+  log_info 'Checking for Homebrew...'
+  if (( ! ${+commands[brew]} )) {
+    log_error 'No Homebrew command found. Please install Homebrew (https://brew.sh)'
+    return 2
+  }
 
-brew bundle --file "${SCRIPT_HOME}/.Brewfile"
-rehash
+  brew bundle --file "${SCRIPT_HOME}/.Brewfile"
+  rehash
+}
