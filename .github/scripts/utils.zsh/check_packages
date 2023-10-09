@@ -54,7 +54,7 @@ Actual   : ${checksum}"
 
   log_status 'Installing Packages.app requires elevated privileges!'
 
-  sudo installer -pkg ${mount_point}/packages/Packages.pkg -target / && rehash
+  sudo installer -pkg "${mount_point}/Install Packages.pkg" -target / && rehash
   hdiutil detach ${mount_point} &> /dev/null && log_status 'Packages.dmg image unmounted.'
   popd
 
