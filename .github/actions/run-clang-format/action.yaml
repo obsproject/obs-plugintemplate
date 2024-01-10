@@ -50,7 +50,7 @@ runs:
           *) ;;
         }
 
-        if (( ${changes[(I)(*.c|*.h|*.cpp|*.hpp|*.m|*.mm)]} )) {
+        if (( ${changes[(I)(*.c|*.h|*.cpp|*.hpp|*.m|*.mm|*.clang-format|*.run-format.zsh)]} )) {
           echo ::group::Install clang-format-16
           brew install --quiet obsproject/tools/clang-format@16
           echo ::endgroup::
