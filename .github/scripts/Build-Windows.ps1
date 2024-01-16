@@ -49,7 +49,7 @@ function Build {
     $ProductVersion = $BuildSpec.version
 
     if ( ! $SkipDeps ) {
-        Install-BuildDependencies -WingetFile "${ScriptHome}/.Wingetfile"
+        #Install-BuildDependencies -WingetFile "${ScriptHome}/.Wingetfile"
     }
 
     Push-Location -Stack BuildTemp
