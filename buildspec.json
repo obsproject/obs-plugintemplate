@@ -33,11 +33,11 @@
     },
     "platformConfig": {
         "macos": {
-            "bundleId": "com.yesuraj130.obs-gstreamer-output"
+            "bundleId": "com.yesuraj130.hjm-obs-gstreamer"
         }
     },
-    "name": "obs-gstreamer-ext",
-    "displayName": "OBS gstreamer Output",
+    "name": "hjm-obs-gstreamer",
+    "displayName": "HJM - OBS Gstreamer",
     "version": "1.0.0",
     "author": "Yesuraj",
     "website": "https://github.com/yesuraj130/obs-gstreamer",
