@@ -120,6 +120,7 @@ Additional build system options are available to developers:
 * `ENABLE_QT`: Adds Qt6 support for custom user interface elements (disabled by default)
 * `CODESIGN_IDENTITY`: Name of the Apple Developer certificate that should be used for code signing
 * `CODESIGN_TEAM`: Apple Developer team ID that should be used for code signing
+* `OBS_BUILD_DIR`: Top level directory of an obs-studio build (Optional - but useful for iterative debugging)
 
 ## GitHub Actions & CI
 
