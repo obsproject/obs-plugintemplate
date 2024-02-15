@@ -29,11 +29,12 @@
 typedef struct {
 	GstElement *pipe;
 	GstElement *video;
-	//GstElement *audio;
+	GstElement *audio;
 	gsize buffer_size;
 	obs_output_t *output;
 	obs_data_t *settings;
 	struct obs_video_info ovi;
+	struct obs_audio_info oai;
 } data_t;
 
 static gboolean bus_callback(GstBus *bus, GstMessage *message, gpointer user_data)
@@ -93,23 +94,24 @@ void gstreamer_output_destroy(void *p)
 {
 	data_t *data = (data_t *)p;
 
-	//if (data->pipe != NULL) {
-	//	GstBus *bus = gst_element_get_bus(data->pipe);
-	//	gst_bus_remove_watch(bus);
-	//	gst_object_unref(bus);
+	if (data->pipe != NULL) {
+		
+		GstBus *bus = gst_element_get_bus(data->pipe);
+		gst_bus_remove_watch(bus);
+		gst_object_unref(bus);
 
-	//	gst_element_set_state(data->pipe, GST_STATE_NULL);
+		gst_element_set_state(data->pipe, GST_STATE_NULL);
 
-	//	gst_object_unref(data->video);
-	//	gst_object_unref(data->audio);
-	//	gst_object_unref(data->pipe);
+		gst_object_unref(data->video);
+		//gst_object_unref(data->audio);
+		gst_object_unref(data->pipe);
 
-	//	data->video = NULL;
-	//	data->audio = NULL;
-	//	data->pipe = NULL;
+		data->video = NULL;
+		//data->audio = NULL;
+		data->pipe = NULL;
 
-	//	obs_log(LOG_INFO, "gstreamer_output_destroy = unreferenced");
-	//}
+		obs_log(LOG_INFO, "gstreamer_output_destroy = unreferenced");
+	}
 
 	g_free(data);
 	obs_log(LOG_INFO, "gstreamer_output_destroy = end");
@@ -117,17 +119,11 @@ void gstreamer_output_destroy(void *p)
 
 bool gstreamer_output_start(void *p)
 {
-
 	obs_log(LOG_INFO, "gstreamer_output_start = called");
 	data_t *data = (data_t *)p;
 
-	//struct obs_audio_info oai;
-	//obs_get_audio_info(&oai);
-
-
-
 	obs_get_video_info(&data->ovi);
-	obs_get_video_info(&data->ovi);
+	obs_get_audio_info(&data->oai);
 
 	GError *err = NULL;
 	char *format;
@@ -188,10 +184,7 @@ bool gstreamer_output_start(void *p)
 	//	oai.speakers, obs_data_get_string(data->settings, "pipeline"));
 
 	//char *pipe = g_strdup_printf("appsrc name=appsrc_video ! x264enc ! udpsink host=192.168.123.18 port=5000");
-	char *pipe_string = g_strdup_printf("%s ! video/x-raw, format=%s, width=%d, height=%d, framerate=%d/%d ! %s", 
-		obs_data_get_string(data->settings, "appsrc_video"), 
-		format, data->ovi.output_width, data->ovi.output_height, data->ovi.fps_num, data->ovi.fps_den, 
-		obs_data_get_string(data->settings, "pipeline"));
+	char *pipe_string = g_strdup_printf("%s ! video/x-raw, format=%s, width=%d, height=%d, framerate=%d/%d ! %s", obs_data_get_string(data->settings, "appsrc_video"), format, data->ovi.output_width, data->ovi.output_height, data->ovi.fps_num, data->ovi.fps_den, obs_data_get_string(data->settings, "pipeline"));
 
 	data->pipe = gst_parse_launch(pipe_string, &err);
 
@@ -208,7 +201,6 @@ bool gstreamer_output_start(void *p)
 	}
 
 	g_free(pipe_string);
-
 
 	data->video = gst_bin_get_by_name(GST_BIN(data->pipe), "appsrc_video");
 	//data->audio = gst_bin_get_by_name(GST_BIN(data->pipe), "appsrc_audio");
@@ -247,14 +239,14 @@ void gstreamer_output_stop(void *p, uint64_t ts)
 	obs_output_end_data_capture(data->output);
 	obs_log(LOG_INFO, "gstreamer_output_stop = obs_output_end_data_capture stopped");
 
-	if (data->pipe) {
+	if (data->pipe) 
+	{
 		gst_app_src_end_of_stream(GST_APP_SRC(data->video));
 		//gst_app_src_end_of_stream(GST_APP_SRC(data->audio));
 		obs_log(LOG_INFO, "gstreamer_output_stop = gst_app_src_end_of_stream");
 		GstBus *bus = gst_element_get_bus(data->pipe);	
 		gst_bus_remove_watch(bus);
 		gst_object_unref(bus);
-
 
 		gst_object_unref(data->video);
 		//gst_object_unref(data->audio);
@@ -317,7 +309,7 @@ void gstreamer_output_raw_audio(void *p, struct audio_data *frame)
 void gstreamer_output_get_defaults(obs_data_t *settings)
 {
 	obs_data_set_default_string(settings, "pipeline", "autovideosink sync=false");
-	obs_data_set_default_string(settings, "appsrc_video", "appsrc name=appsrc_video is-live=true format=GST_FORMAT_TIME do-timestamp=true");
+	obs_data_set_default_string(settings, "appsrc_video", "appsrc name=appsrc_video is-live=false format=GST_FORMAT_TIME do-timestamp=true");
 }
 
 obs_properties_t *gstreamer_output_get_properties(void *data)
