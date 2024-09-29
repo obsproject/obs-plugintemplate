@@ -22,6 +22,7 @@ function Install-BuildDependencies {
         'x64' = ${Env:ProgramFiles}
         'x86' = ${Env:ProgramFiles(x86)}
         'arm64' = ${Env:ProgramFiles(arm)}
+        'appdata-x64' = ${Env:LOCALAPPDATA}+"\Programs"
     }
 
     $Paths = $Env:Path -split [System.IO.Path]::PathSeparator
