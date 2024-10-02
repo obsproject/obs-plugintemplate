@@ -1,30 +1,30 @@
 {
     "dependencies": {
         "obs-studio": {
-            "version": "30.1.2",
+            "version": "30.2.3",
             "baseUrl": "https://github.com/obsproject/obs-studio/archive/refs/tags",
             "label": "OBS sources",
             "hashes": {
                 "macos": "490bae1c392b3b344b0270afd8cb887da4bc50bd92c0c426e96713c1ccb9701a",
-                "windows-x64": "c2dd03fa7fd01fad5beafce8f7156da11f9ed9a588373fd40b44a06f4c03b867"
+                "windows-x64": "a75de0a777013ae5edca526e21b584176bf21606d4d5db23ba4b5a87cfde12e3"
             }
         },
         "prebuilt": {
-            "version": "2024-03-19",
+            "version": "2024-09-05",
             "baseUrl": "https://github.com/obsproject/obs-deps/releases/download",
             "label": "Pre-Built obs-deps",
             "hashes": {
                 "macos": "2e9bfb55a5e0e4c1086fa1fda4cf268debfead473089df2aaea80e1c7a3ca7ff",
-                "windows-x64": "6e86068371526a967e805f6f9903f9407adb683c21820db5f07da8f30d11e998"
+                "windows-x64": "85a45cacca0853fef9444b6e99c529e81ce896ce3e3318edf458fd7ad78eed89"
             }
         },
         "qt6": {
-            "version": "2024-03-19",
+            "version": "2024-09-05",
             "baseUrl": "https://github.com/obsproject/obs-deps/releases/download",
             "label": "Pre-Built Qt6",
             "hashes": {
                 "macos": "694f1e639c017e3b1f456f735330dc5afae287cbea85757101af1368de3142c8",
-                "windows-x64": "72d1df34a0ef7413a681d5fcc88cae81da60adc03dcd23ef17862ab170bcc0dd"
+                "windows-x64": "0344d771dd36d42b2f13e76268c2d7c03152f6fd822e90c8124e27785a966658"
             },
             "debugSymbols": {
                 "windows-x64": "fbddd1f659c360f2291911ac5709b67b6f8182e6bca519d24712e4f6fd3cc865"
