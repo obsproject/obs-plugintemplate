@@ -110,6 +110,15 @@ build() {
     typeset -gx CODESIGN_TEAM="$(print "${CODESIGN_IDENT}" | /usr/bin/sed -En 's/.+\((.+)\)/\1/p')"
   }
 
+  log_group "Xcode and SDK Info"
+  export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+  export DEVELOPER_DIR="/Applications/Xcode_16.1.0.app/Contents/Developer"
+
+  xcodebuild -version
+  xcodebuild -showsdks
+  xcode-select -p
+  xcrun --show-sdk-version
+
   log_group "Configuring ${product_name}..."
   cmake -S ${project_root} ${cmake_args}
 
