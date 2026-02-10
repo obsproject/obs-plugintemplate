@@ -38,6 +38,7 @@ runs:
       run: |
         : Run macOS Build
 
+        chmod +x .github/scripts/build-macos
         local -a build_args=(--config ${{ inputs.config }})
         if (( ${+RUNNER_DEBUG} )) build_args+=(--debug)
 
@@ -65,6 +66,7 @@ runs:
       run: |
         : Run Ubuntu Build
 
+        chmod +x .github/scripts/build-ubuntu
         local -a build_args=(
           --target ubuntu-${{ inputs.target }}
           --config ${{ inputs.config }}

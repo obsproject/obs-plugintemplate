@@ -53,6 +53,7 @@ runs:
         print ::group::Install clang-format-19
         brew install --quiet obsproject/tools/clang-format@19
         print ::endgroup::
+        chmod +x ./build-aux/run-clang-format
 
         print ::group::Run clang-format-19
         local -a changes=(${(s:,:)CHANGED_FILES//[\[\]\'\"]/})

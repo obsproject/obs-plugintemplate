@@ -52,6 +52,7 @@ runs:
         print ::group::Install gersemi
         brew install --quiet obsproject/tools/gersemi
         print ::endgroup::
+        chmod +x ./build-aux/run-gersemi
 
         print ::group::Run gersemi
         local -a changes=(${(s:,:)CHANGED_FILES//[\[\]\'\"]/})
