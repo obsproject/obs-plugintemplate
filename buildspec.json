@@ -33,13 +33,13 @@
     },
     "platformConfig": {
         "macos": {
-            "bundleId": "com.example.plugintemplate-for-obs"
+            "bundleId": "com.werner1447.obs-udp-output"
         }
     },
-    "name": "plugintemplate-for-obs",
-    "displayName": "Plugin Template for OBS",
+    "name": "obs-udp-output",
+    "displayName": "OBS UDP Output",
     "version": "1.0.0",
-    "author": "Your Name Here",
-    "website": "https://example.com",
+    "author": "werner1447",
+    "website": "https://github.com/werner1447/obs-udp-output",
     "email": "me@example.com"
 }
