@@ -94,7 +94,7 @@ function(_setup_obs_studio)
     COMMAND_ERROR_IS_FATAL ANY
     OUTPUT_QUIET
   )
-  message(STATUS "Build ${label} (Reelase - ${arch}) - done")
+  message(STATUS "Build ${label} (Release - ${arch}) - done")
 
   message(STATUS "Install ${label} (${arch})")
   execute_process(

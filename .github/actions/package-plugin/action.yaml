@@ -90,7 +90,7 @@ runs:
           --target ubuntu-${{ inputs.target }}
           --config ${{ inputs.config }}
         )
-        if (( ${+RUNNER_DEBUG} )) build_args+=(--debug)
+        if (( ${+RUNNER_DEBUG} )) package_args+=(--debug)
 
         if [[ '${{ inputs.package }}' == 'true' ]] package_args+=(--package)
 
