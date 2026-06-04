@@ -60,7 +60,22 @@ function(_setup_obs_studio)
     set(_cmake_generator "Xcode")
     set(_cmake_arch "-DCMAKE_OSX_ARCHITECTURES:STRING='arm64;x86_64'")
     set(_cmake_extra "-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}")
+
+    #Patch libobs-metal if required
+    if (_obs_version VERSION_LESS_EQUAL "32.1.2")
+
+      file(READ "${dependencies_dir}/${_obs_destination}/libobs-metal/CMakeLists.txt" CONTENTS)
+
+      #check if Swift is not available
+      if(NOT "${CONTENTS}" MATCHES "enable_language\\(Swift\\)")
+        string(REGEX REPLACE "cmake_minimum_required\\(VERSION 3.28...3.30\\)" "cmake_minimum_required(VERSION 3.28...3.30)\nenable_language(Swift)" NEW_CONTENTS "${CONTENTS}")
+        message(STATUS "Patching libobs-metal")
+        file(WRITE "${dependencies_dir}/${_obs_destination}/libobs-metal/CMakeLists.txt" "${NEW_CONTENTS}")
+      endif()
+
+    endif()
   endif()
+
 
   message(STATUS "Configure ${label} (${arch})")
   execute_process(
