@@ -23,11 +23,13 @@ function(set_target_properties_plugin target)
     PROPERTIES VERSION ${PLUGIN_VERSION} SOVERSION ${PLUGIN_VERSION_MAJOR} PREFIX ""
   )
 
-  install(
-    TARGETS ${target}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/obs-plugins
-  )
+  # OBS 33 and later
+  install(TARGETS ${target} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/obs-modules/plugins COMPONENT Modern)
+
+  if(ENABLE_BUILD_LEGACY)
+    # OBS pre-33 (loaded as legacy in OBS 33)
+    install(TARGETS ${target} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/obs-plugins COMPONENT Legacy)
+  endif()
 
   if(TARGET plugin-support)
     target_link_libraries(${target} PRIVATE plugin-support)
@@ -70,9 +72,19 @@ function(target_install_resources target)
 
     install(
       DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/"
-      DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/obs/obs-plugins/${target}
+      DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/obs/obs-modules/plugins/${target}
       USE_SOURCE_PERMISSIONS
+      COMPONENT Modern
     )
+
+    if(ENABLE_BUILD_LEGACY)
+      install(
+        DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/"
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/obs/obs-plugins/${target}
+        USE_SOURCE_PERMISSIONS
+        COMPONENT Legacy
+      )
+    endif()
 
     add_custom_command(
       TARGET ${target}
@@ -84,6 +96,10 @@ function(target_install_resources target)
       COMMENT "Copy ${target} resources to rundir"
       VERBATIM
     )
+
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/manifest.json")
+      target_add_resource(${target} "${CMAKE_CURRENT_SOURCE_DIR}/manifest.json")
+    endif()
   endif()
 endfunction()
 
@@ -91,7 +107,15 @@ endfunction()
 function(target_add_resource target resource)
   message(DEBUG "Add resource '${resource}' to target ${target} at destination '${target_destination}'...")
 
-  install(FILES "${resource}" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/obs/obs-plugins/${target})
+  install(
+    FILES "${resource}"
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/obs/obs-modules/plugins/${target}
+    COMPONENT Modern
+  )
+
+  if(ENABLE_BUILD_LEGACY)
+    install(FILES "${resource}" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/obs/obs-plugins/${target} COMPONENT Legacy)
+  endif()
 
   add_custom_command(
     TARGET ${target}

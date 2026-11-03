@@ -1,0 +1,16 @@
+{
+    "display_name": "Plugin Template for OBS",
+    "id": "00000000-0000-0000-0000-000000000000",
+    "version": "1.0.0",
+    "authors": ["Your Name"],
+    "name": "plugintemplate-for-obs",
+    "description": "A plugin template to build plugins from.",
+    "long_description": "A template plugin for OBS Studio that can be used as a starting point for developing new plugins.",
+    "urls": {
+        "repository": "<URL TO YOUR REPOSITORY>",
+        "website": "<URL TO YOUR WEBSITE>",
+        "support": "<URL TO YOUR SUPPORT PAGE>"
+    },
+    "has_banner": false,
+    "has_icon": false
+}

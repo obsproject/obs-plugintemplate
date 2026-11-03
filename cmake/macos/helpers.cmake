@@ -89,6 +89,10 @@ function(target_install_resources target)
       set_property(SOURCE "${data_file}" PROPERTY MACOSX_PACKAGE_LOCATION "Resources/${relative_path}")
       source_group("Resources/${relative_path}" FILES "${data_file}")
     endforeach()
+
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/manifest.json")
+      target_add_resource(${target} "${CMAKE_CURRENT_SOURCE_DIR}/manifest.json")
+    endif()
   endif()
 endfunction()
 
