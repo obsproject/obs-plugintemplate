@@ -162,13 +162,26 @@ ${_usage_host:-}"
     popd
   } else {
     log_group "Archiving ${product_name}..."
-    local output_name="${product_name}-${product_version}-${target##*-}-ubuntu-gnu"
     local _tarflags='cJf'
     if (( _loglevel > 1 || ${+CI} )) _tarflags="v${_tarflags}"
 
-    pushd ${project_root}/release/${config}
-    XZ_OPT=-T0 tar "-${_tarflags}" ${project_root}/release/${output_name}.tar.xz (lib|share)
-    popd
+    local component file_suffix
+    for component file_suffix (Modern '' Legacy '-legacy') {
+      local output_name="${product_name}-${product_version}-${target##*-}-ubuntu-gnu${file_suffix}"
+      local staging_dir="${project_root}/release/${config}-${component:l}"
+
+      rm -rf ${staging_dir}
+      cmake --install build_${target##*-} --config ${config} --component ${component} --prefix ${staging_dir} ${cmake_args}
+
+      local -a staged_dirs=(${$staging_dir}/(lib|share)(N/))
+      if (( ! #staged_dirs )) && [[ $component == Legacy ]] {
+        continue
+      }
+      
+      pushd ${staging_dir}
+      XZ_OPT=-T0 tar "-${_tarflags}" ${project_root}/release/${output_name}.tar.xz (lib|share)
+      popd
+    }
   }
   log_group
 }

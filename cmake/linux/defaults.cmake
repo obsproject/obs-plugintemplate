@@ -40,9 +40,32 @@ set(
   release/
 )
 
+# Build .deb per install component: Modern for OBS 33+ and Legacy for Pre 33
 set(CPACK_VERBATIM_VARIABLES YES)
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-source")
 set(CPACK_ARCHIVE_THREADS 0)
+
+set(CPACK_DEB_COMPONENT_INSTALL ON)
+set(CPACK_COMPONENTS_ALL Modern)
+if(ENABLE_BUILD_LEGACY)
+  list(APPEND CPACK_COMPONENTS_ALL Legacy)
+endif()
+
+set(_deb_base "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_C_LIBRARY_ARCHITECTURE}")
+set(CPACK_DEBIAN_MODERN_FILE_NAME "${_deb_base}.deb")
+set(CPACK_DEBIAN_LEGACY_FILE_NAME "${_deb_base}-legacy.deb")
+
+# Debian package names, set so installing legacy over modern or the other way around
+# wont result in 2 installs of the plugin
+set(CPACK_DEBIAN_MODERN_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
+set(CPACK_DEBIAN_LEGACY_PACKAGE_NAME "${CPACK_PACKAGE_NAME}-legacy")
+set(CPACK_DEBIAN_MODERN_PACKAGE_CONFLICTS "${CPACK_PACKAGE_NAME}-legacy")
+set(CPACK_DEBIAN_MODERN_PACKAGE_REPLACES "${CPACK_PACKAGE_NAME}-legacy")
+set(CPACK_DEBIAN_LEGACY_PACKAGE_CONFLICTS "${CPACK_PACKAGE_NAME}")
+set(CPACK_DEBIAN_LEGACY_PACKAGE_REPLACES "${CPACK_PACKAGE_NAME}")
+
+# Stop modern install on older OBS
+set(CPACK_DEBIAN_MODERN_PACKAGE_BREAKS "obs-studio (<< 33~)")
 
 include(CPack)
 
